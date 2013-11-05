@@ -27,6 +27,7 @@ module VagrantPlugins
               # TODO: Find out where this fits into the process
               # b2.use Builtin::EnvSet, :port_collision_repair => true
               # b2.use Builtin::HandleForwardedPortCollisions
+              b2.use Builtin::Provision
               b2.use ShareFolders
               b2.use ForwardPorts
               # This will actually create and start, but that's fine
@@ -142,6 +143,7 @@ module VagrantPlugins
             # If the container is running, then our work here is done, exit
             next if env[:result]
 
+            b2.use Builtin::Provision
             b2.use Message, :starting
             b2.use action_boot
           end
@@ -150,8 +152,7 @@ module VagrantPlugins
 
       def self.action_boot
         Builder.new.tap do |b|
-          b.use Builtin::Provision
-          # b.use Builtin::SetHostname
+          # TODO: b.use Builtin::SetHostname
           b.use Start
           b.use Builtin::WaitForCommunicator
         end

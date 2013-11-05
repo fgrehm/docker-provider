@@ -21,10 +21,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # TODO: This is a container that gets provisioned with Puppet
+  # This is a container that gets provisioned with Puppet
   config.vm.define 'precise' do |node|
     node.vm.box = 'precise'
     node.vm.box_url = 'http://bit.ly/vagrant-docker-precise'
+
+    node.vm.provision :puppet do |puppet|
+      puppet.manifests_path = "."
+      puppet.manifest_file  = "site.pp"
+    end
   end
 
   # Custom start script

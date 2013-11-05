@@ -22,6 +22,7 @@ worth of development / testing.
 * Port forwarding
 * Synced / shared folders support
 * Set container hostnames from Vagrantfiles
+* Provision Docker containers with any built-in Vagrant provider
 
 
 ## Getting started
@@ -74,8 +75,10 @@ There's probably a whole lot of limitations right now but during these early day
 of the plugin I can tell you for sure that some things are probably not going to
 work as you might expect. For instance forwarded ports, synced folders and containers'
 hostnames will not be reconfigured on `vagrant reload`s if they have changed and
-the plugin **_will not give you any kind of warning or message_**. Forwarded ports
-automatic collision handling is **_not supported as well_**.
+the plugin **_will not give you any kind of warning or message_**. For instance,
+if you change your Puppet manifests / Chef cookbooks paths (which are shared /
+synced folders under the hood), **_you'll need to start from scratch_**. Oh,
+and forwarded ports automatic collision handling is **_not supported as well_**.
 
 The plugin also requires Docker's executable to be available on current user's `PATH`
 and that the current user has been added to the `docker` group since we are not
