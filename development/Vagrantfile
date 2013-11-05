@@ -1,0 +1,91 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.require_plugin 'vagrant-cachier'
+Vagrant.require_plugin 'vagrant-notify'
+Vagrant.require_plugin 'vagrant-lxc'
+Vagrant.require_plugin 'vagrant-pristine'
+Vagrant.require_plugin 'vagrant-global-status'
+Vagrant.require_plugin 'ventriloquist'
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "raring64"
+  config.vm.synced_folder "../", "/vagrant", id: 'vagrant-root'
+
+  config.cache.auto_detect = true
+
+  config.vm.provider :lxc do |lxc, override|
+    # Required to boot nested containers
+    lxc.customize 'aa_profile', 'unconfined'
+    override.vm.box_url = 'http://bit.ly/vagrant-lxc-raring64-2013-10-23'
+  end
+
+  config.vm.provider :virtualbox do |vb, override|
+    vb.customize [ "modifyvm", :id, "--memory", 1536, "--cpus", "2" ]
+    override.vm.box_url = 'http://cloud-images.ubuntu.com/vagrant/raring/current/raring-server-cloudimg-amd64-vagrant-disk1.box'
+    override.vm.network :private_network, ip: "192.168.50.102"
+  end
+
+  # Required to boot nested containers
+  config.vm.provision :shell, inline: %[
+    if ! [ -f /etc/default/lxc ]; then
+      cat <<STR > /etc/default/lxc
+LXC_AUTO="true"
+USE_LXC_BRIDGE="true"
+LXC_BRIDGE="lxcbr0"
+LXC_ADDR="10.0.240.1"
+LXC_NETMASK="255.255.255.0"
+LXC_NETWORK="10.0.240.0/24"
+LXC_DHCP_RANGE="10.0.240.2,10.0.240.254"
+LXC_DHCP_MAX="253"
+LXC_SHUTDOWN_TIMEOUT=120
+STR
+    fi
+  ]
+
+  # Install docker on the machine (powered by Vocker)
+  config.vm.provision :docker do |docker|
+    docker.pull_images 'ubuntu:precise'
+  end
+
+  # Configure Ruby so that we can test the plugin from within the VM
+  config.vm.provision :ventriloquist do |env|
+    env.platforms << 'ruby:1.9.3'
+  end
+
+  config.vm.provision :shell, privileged: false, inline: %[
+    # Bundle!
+    cd /vagrant && bundle install
+
+    # Because we are lazy
+    if ! $(grep 'cd /vagrant' -q $HOME/.bashrc); then
+      echo 'alias be="bundle exec"' >> $HOME/.bashrc
+      echo 'alias vagrant="bundle exec vagrant"' >> $HOME/.bashrc
+      echo 'cd /vagrant' >> $HOME/.bashrc
+    fi
+
+    if ! [ -d $HOME/.vagrant.d/boxes ]; then
+      # This is a dummy base box "built" by hand
+      mkdir -p $HOME/.vagrant.d/boxes/dummy/docker
+      echo '{ "provider": "docker" }' > $HOME/.vagrant.d/boxes/dummy/docker/metadata.json
+    fi
+
+    # TODO: Get rid of this once Ventriloquist gets support for it:
+    #         https://github.com/fgrehm/ventriloquist/issues/32
+    if ! [ -f /usr/local/bin/bats ]; then
+      git clone https://github.com/sstephenson/bats.git /tmp/bats
+      cd /tmp/bats && sudo ./install.sh /usr/local
+      rm -rf /tmp/bats
+    fi
+
+    if ! $(which bsdtar > /dev/null 2>/dev/null); then
+      sudo apt-get install bsdtar -y
+    fi
+
+    echo -n "\n\n----\n"
+    echo 'If this is the first time you are provisioning the VM, please `bundle exec vagrant reload` it ;)'
+  ]
+end

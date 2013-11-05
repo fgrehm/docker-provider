@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
+
+# This is only needed if you are using the plugin from sources with bundler
+Vagrant.require_plugin 'docker-provider'
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # This just fires up a container with a SSH server
+  config.vm.define 'dummy' do |node|
+    node.vm.box = 'dummy'
+    node.vm.box_url = 'http://bit.ly/vagrant-docker-dummy'
+
+    node.vm.provider :docker do |docker|
+      docker.image = 'fgrehm/vagrant-ubuntu:precise'
+      docker.cmd   = ["/usr/sbin/sshd", "-D", "-e"]
+    end
+  end
+
+  # TODO: This is a container that gets provisioned with Puppet
+  config.vm.define 'precise' do |node|
+    node.vm.box = 'precise'
+    node.vm.box_url = 'http://bit.ly/vagrant-docker-precise'
+  end
+
+  # Custom start script
+  config.vm.define 'nginx' do |node|
+    node.vm.box = 'nginx'
+    node.vm.box_url = 'http://bit.ly/vagrant-docker-nginx'
+    node.vm.network "forwarded_port", guest: 80, host: 8080
+  end
+end
