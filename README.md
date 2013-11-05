@@ -22,7 +22,6 @@ worth of development / testing.
 * Port forwarding
 * Synced / shared folders support
 * Set container hostnames from Vagrantfiles
-* Provision Docker containers with any built-in Vagrant provider
 
 
 ## Getting started
