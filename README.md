@@ -24,6 +24,12 @@ worth of development / testing.
 * Set container hostnames from Vagrantfiles
 * Provision Docker containers with any built-in Vagrant provider
 
+You can see the plugin in action by watching the following "teasers" I published
+along the way:
+
+* http://asciinema.org/a/6162
+* http://asciinema.org/a/6177
+
 
 ## Getting started
 
