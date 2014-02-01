@@ -52,7 +52,7 @@ GIT
 PATH
   remote: .
   specs:
-    docker-provider (0.0.3.dev)
+    docker-provider (0.1.0.dev)
 
 GEM
   remote: https://rubygems.org/

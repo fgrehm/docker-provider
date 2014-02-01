@@ -1,1 +1,2 @@
-require 'docker-provider/plugin'
+require_relative "version"
+require_relative "plugin"
