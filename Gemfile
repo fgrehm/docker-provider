@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'vagrant', github: 'mitchellh/vagrant'
+  gem 'vagrant', github: 'mitchellh/vagrant', tag: 'v1.4.3'
 end
 
 group :development do
@@ -13,7 +13,7 @@ group :development do
   gem 'rb-inotify'
 
   gem 'vagrant-notify',        github: 'fgrehm/vagrant-notify'
-  gem 'vagrant-cachier',       github: 'fgrehm/vagrant-cachier'
+  gem 'vagrant-cachier',       github: 'fgrehm/vagrant-cachier', branch: 'next'
   gem 'vagrant-pristine',      github: 'fgrehm/vagrant-pristine'
   gem 'vagrant-lxc',           github: 'fgrehm/vagrant-lxc'
   gem 'vagrant-global-status', github: 'fgrehm/vagrant-global-status'
