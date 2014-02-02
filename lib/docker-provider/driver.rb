@@ -61,7 +61,7 @@ module VagrantPlugins
 
       def stop(cid)
         if running?(cid)
-          execute('docker', 'stop', cid)
+          execute('docker', 'stop', '-t', '30', cid)
         end
       end
 

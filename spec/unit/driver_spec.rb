@@ -111,7 +111,7 @@ describe VagrantPlugins::DockerProvider::Driver do
       before { subject.stub(running?: true) }
 
       it 'stops the container' do
-        subject.should_receive(:execute).with('docker', 'stop', cid)
+        subject.should_receive(:execute).with('docker', 'stop', '-t', '30', cid)
         subject.stop(cid)
       end
     end
@@ -120,7 +120,7 @@ describe VagrantPlugins::DockerProvider::Driver do
       before { subject.stub(running?: false) }
 
       it 'does not stop container' do
-        subject.should_not_receive(:execute).with('docker', 'stop', cid)
+        subject.should_not_receive(:execute).with('docker', 'stop', '-t', '30', cid)
         subject.stop(cid)
       end
     end
