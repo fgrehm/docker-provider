@@ -3,7 +3,7 @@ module VagrantPlugins
     module Action
       class Create
         def initialize(app, env)
-          @app    = app
+          @app = app
           @@mutex ||= Mutex.new
         end
 
@@ -34,7 +34,7 @@ module VagrantPlugins
             ports:    forwarded_ports,
             name:     container_name,
             hostname: @machine_config.vm.hostname,
-            volumes:  synced_folders
+            volumes:  @provider_config.volumes
           }
         end
 
@@ -42,12 +42,6 @@ module VagrantPlugins
           @env[:forwarded_ports].map do |fp|
             # TODO: Support for the protocol argument
             "#{fp[:host]}:#{fp[:guest]}"
-          end.compact
-        end
-
-        def synced_folders
-          @env[:synced_folders].map do |sf|
-            "#{sf[:hostpath]}:#{sf[:guestpath]}"
           end.compact
         end
       end

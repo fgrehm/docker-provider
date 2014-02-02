@@ -25,7 +25,7 @@ module VagrantPlugins
         # we return nil.
         return nil if state == :not_created
 
-        network = @driver.inspect(@machine.id)['NetworkSettings']
+        network = @driver.inspect_container(@machine.id)['NetworkSettings']
         ip      = network['IPAddress']
 
         # If we were not able to identify the container's IP, we return nil

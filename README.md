@@ -6,14 +6,13 @@ A spike on a [Docker](http://www.docker.io/) provider for [Vagrant](http://www.v
 
 ## Warning
 
-This is highly experimental and is just 8 [tomatoes](http://pomodorotechnique.com/)
-worth of development / testing.
+This is highly experimental, expect things to break.
 
 
 ## Requirements
 
 * Vagrant 1.3+
-* Docker 0.6.5+
+* Docker 0.7.0+
 
 
 ## Features

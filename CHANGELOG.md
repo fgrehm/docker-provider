@@ -2,8 +2,8 @@
 
 BACKWARDS INCOMPATIBILITY:
 
-  - Support for Vagrant < 1.4 is gone, please use a previous plugin version if
-    you are running Vagrant 1.2 / 1.3
+  - Support for Vagrant < 1.4 and Docker 0.7.0 are gone, please use a previous
+    plugin version if you can't upgrade.
 
 ## [0.0.2](https://github.com/fgrehm/docker-provider/compare/v0.0.1...v0.0.2) (November 5, 2013)
 

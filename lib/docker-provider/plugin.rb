@@ -21,6 +21,11 @@ module VagrantPlugins
         require_relative 'config'
         Config
       end
+
+      synced_folder(:docker) do
+        require File.expand_path("../synced_folder", __FILE__)
+        SyncedFolder
+      end
     end
   end
 end

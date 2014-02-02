@@ -1,2 +1,2 @@
-require_relative "version"
-require_relative "plugin"
+require_relative "docker-provider/version"
+require_relative "docker-provider/plugin"

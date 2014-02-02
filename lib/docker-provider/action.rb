@@ -5,8 +5,8 @@ require_relative 'action/destroy'
 require_relative 'action/forward_ports'
 require_relative 'action/stop'
 require_relative 'action/message'
+require_relative 'action/prepare_nfs_valid_ids'
 require_relative 'action/is_running'
-require_relative 'action/share_folders'
 require_relative 'action/start'
 
 module VagrantPlugins
@@ -28,7 +28,9 @@ module VagrantPlugins
               # b2.use Builtin::EnvSet, :port_collision_repair => true
               # b2.use Builtin::HandleForwardedPortCollisions
               b2.use Builtin::Provision
-              b2.use ShareFolders
+              b2.use PrepareNFSValidIds
+              b2.use Builtin::SyncedFolderCleanup
+              b2.use Builtin::SyncedFolders
               b2.use ForwardPorts
               # This will actually create and start, but that's fine
               b2.use Create

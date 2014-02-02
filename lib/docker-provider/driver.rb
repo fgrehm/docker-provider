@@ -44,12 +44,12 @@ module VagrantPlugins
       end
 
       def created?(cid)
-        result = execute('docker', 'ps', '-a', '-q').to_s
+        result = execute('docker', 'ps', '-a', '-q', '-notrunc').to_s
         result =~ /^#{Regexp.escape cid}$/
       end
 
       def running?(cid)
-        result = execute('docker', 'ps', '-q')
+        result = execute('docker', 'ps', '-q', '-notrunc')
         result =~ /^#{Regexp.escape cid}$/m
       end
 
@@ -71,7 +71,7 @@ module VagrantPlugins
         end
       end
 
-      def inspect(cid)
+      def inspect_container(cid)
         # DISCUSS: Is there a chance that this will change?
         @data ||= JSON.parse(execute('docker', 'inspect', cid)).first
       end
