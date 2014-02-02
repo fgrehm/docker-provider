@@ -126,18 +126,18 @@ describe VagrantPlugins::DockerProvider::Driver do
     end
   end
 
-  describe '#inspect' do
+  describe '#inspect_container' do
     let(:data) { '[{"json": "value"}]' }
 
     before { subject.stub(execute: data) }
 
-    it 'inspects the container' do
+    it 'inspect_container the container' do
       subject.should_receive(:execute).with('docker', 'inspect', cid)
-      subject.inspect(cid)
+      subject.inspect_container(cid)
     end
 
     it 'parses the json output' do
-      expect(subject.inspect(cid)).to eq('json' => 'value')
+      expect(subject.inspect_container(cid)).to eq('json' => 'value')
     end
   end
 end
