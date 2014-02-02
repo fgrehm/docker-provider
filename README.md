@@ -1,7 +1,7 @@
 # docker-provider
 
 A spike on a [Docker](http://www.docker.io/) provider for [Vagrant](http://www.vagrantup.com/)
-1.3+.
+1.4+.
 
 
 ## Warning
@@ -11,7 +11,7 @@ This is highly experimental, expect things to break.
 
 ## Requirements
 
-* Vagrant 1.3+
+* Vagrant 1.4+
 * Docker 0.7.0+
 
 
@@ -113,8 +113,10 @@ for this provider.
 
 Unless you are able to run the container in "machine mode", you'll need to create
 a custom command / script that starts the processes you need prior to firing up
-the SSH server. An example can be found at the [`boxes/nginx`](boxes/nginx)
-folder of this repo.
+the SSH server. You could do that in many ways but a "simple bash script" example
+can be found at the [`boxes/nginx`](boxes/nginx) and a [supervisord](http://supervisord.org/introduction.html)
+example at the [`boxes/nginx-supervisord`](boxes/nginx-supervisord) folders of
+this repo.
 
 On a side note, if you really need your Docker containers to behave like machines
 with Vagrant and you can't get it to work that way like me, you might want to use
