@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # This is a container that gets provisioned with Puppet
   config.vm.define 'precise' do |node|
-    node.vm.box = 'precise'
+    node.vm.box = 'precise64'
     node.vm.box_url = 'http://bit.ly/vagrant-docker-precise'
 
     node.vm.provision :puppet do |puppet|
