@@ -5,6 +5,15 @@ BACKWARDS INCOMPATIBILITY:
   - Support for Vagrant < 1.4 and Docker 0.7.0 are gone, please use a previous
     plugin version if you can't upgrade.
 
+IMPROVEMENTS:
+
+  - Increase timeout taken before killing a container on `vagrant halt`
+  - Add `supervisord` example
+
+BUG FIXES:
+
+  - Fix `vagrant up` failure with newer Vagrant and Docker versions.
+
 ## [0.0.2](https://github.com/fgrehm/docker-provider/compare/v0.0.1...v0.0.2) (November 5, 2013)
 
   - Fix provisioning with Vagrant's built in provisioners
