@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = VagrantPlugins::DockerProvider::VERSION
   spec.authors       = ["Fabio Rehm"]
   spec.email         = ["fgrehm@gmail.com"]
-  spec.description   = %q{Experimental Docker provider for Vagrant}
+  spec.description   = %q{Docker provider for Vagrant}
   spec.summary       = spec.description
   spec.homepage      = "https://github.com/fgrehm/docker-provider"
   spec.license       = "MIT"
@@ -21,5 +21,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
-  # TODO: spec.add_dependency 'docker-api', '~> 1.6.0'
 end
