@@ -3,12 +3,6 @@
 FROM ubuntu-upstart:precise
 MAINTAINER Fabio Rehm "fgrehm@gmail.com"
 
-# Enable universe
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
-
-# Update things
-RUN apt-get update && apt-get install openssh-server sudo curl -y && apt-get upgrade -y && apt-get clean
-
 # Create and configure vagrant user
 RUN useradd --create-home -s /bin/bash vagrant
 WORKDIR /home/vagrant
@@ -25,8 +19,14 @@ RUN sed -i.bkp -e \
       's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' \
       /etc/sudoers
 
+# Enable universe
+RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+
 # Thanks to http://docs.docker.io/en/latest/examples/running_ssh_service/
 RUN mkdir /var/run/sshd
+
+# Update things
+RUN apt-get update && apt-get install openssh-server sudo curl -y && apt-get upgrade -y && apt-get clean
 
 # Puppet
 RUN wget http://apt.puppetlabs.com/puppetlabs-release-stable.deb -O /tmp/puppetlabs-release-stable.deb && \
