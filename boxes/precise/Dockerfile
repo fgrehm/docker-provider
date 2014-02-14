@@ -1,8 +1,6 @@
 # Base Vagrant box
-#
-# VERSION               0.0.1
 
-FROM ubuntu:precise
+FROM ubuntu-upstart:precise
 MAINTAINER Fabio Rehm "fgrehm@gmail.com"
 
 # Enable universe
