@@ -69,9 +69,11 @@ module VagrantPlugins
         Builder.new.tap do |b|
           b.use Builtin::Call, Created do |env, b2|
             if env[:result]
-              # TODO: Make use of this once we figure out how to run dockers in machine mode
-              # b2.use Builtin::Call, Builtin::GracefulHalt, :stopped, :running do |env2, b3|
-              b2.use Stop
+              b2.use Builtin::Call, Builtin::GracefulHalt, :stopped, :running do |env2, b3|
+                if !env2[:result]
+                  b3.use Stop
+                end
+              end
             else
               b2.use Message, :not_created
             end
