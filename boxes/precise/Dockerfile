@@ -25,8 +25,11 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt
 # Thanks to http://docs.docker.io/en/latest/examples/running_ssh_service/
 RUN mkdir /var/run/sshd
 
-# Update things
-RUN apt-get update && apt-get install openssh-server sudo curl -y && apt-get upgrade -y && apt-get clean
+# Update things and make sure the required packges are installed
+RUN apt-get update && \
+    apt-get install openssh-server sudo curl nfs-common -y && \
+    apt-get upgrade -y && \
+    apt-get clean
 
 # Puppet
 RUN wget http://apt.puppetlabs.com/puppetlabs-release-stable.deb -O /tmp/puppetlabs-release-stable.deb && \
