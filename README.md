@@ -1,12 +1,14 @@
 # docker-provider
 
-A spike on a [Docker](http://www.docker.io/) provider for [Vagrant](http://www.vagrantup.com/)
+[![Build Status](https://travis-ci.org/fgrehm/docker-provider.png?branch=master)](https://travis-ci.org/fgrehm/docker-provider) [![Gem Version](https://badge.fury.io/rb/docker-provider.png)](http://badge.fury.io/rb/docker-provider) [![Gittip](http://img.shields.io/gittip/fgrehm.svg)](https://www.gittip.com/fgrehm/)
+
+A [Docker](http://www.docker.io/) provider for [Vagrant](http://www.vagrantup.com/)
 1.4+.
 
 
 ## Warning
 
-This is highly experimental, expect things to break.
+This is experimental, expect things to break.
 
 
 ## Requirements
@@ -21,7 +23,7 @@ This is highly experimental, expect things to break.
 * Port forwarding
 * Synced / shared folders support
 * Set container hostnames from Vagrantfiles
-* Provision Docker containers with any built-in Vagrant provider
+* Provision Docker containers with any built-in Vagrant provisioner
 
 You can see the plugin in action by watching the following "teasers" I published
 along the way:
@@ -40,7 +42,7 @@ The plugin is not very user friendly at the moment, so please download the base
 Docker image manually with `docker pull fgrehm/vagrant-ubuntu:precise` in order
 to have some feedback about the download process.
 
-Assuming you have Vagrant 1.3+ and Docker 0.6.5+ installed just sing that same
+Assuming you have Vagrant 1.4+ and Docker 0.7.0+ installed just sing that same
 old song:
 
 ```
@@ -90,13 +92,6 @@ and that the current user has been added to the `docker` group since we are not
 using `sudo` when interacting with Docker's CLI. For more information on setting
 this up please check [this page](http://docs.docker.io/en/latest/use/basics/#why-sudo).
 
-Another thing to keep in mind is that Docker is all about _application containers_
-and not _machine containers_. I failed to boot a Docker container in what people
-have been calling "[machine mode](https://github.com/dotcloud/docker/issues/2170#issuecomment-26118964)"
-and some hacking will be required in order to run multiple processes on the
-container as described below. For more information about the issues related to
-it, please search Docker's issue tracker for `/sbin/init` and / or "machine mode".
-
 
 ## Box format
 
@@ -111,26 +106,13 @@ for this provider.
 
 ## Running multiple processes on the container
 
-Unless you are able to run the container in "machine mode", you'll need to create
-a custom command / script that starts the processes you need prior to firing up
-the SSH server. You could do that in many ways but a "simple bash script" example
-can be found at the [`boxes/nginx`](boxes/nginx) and a [supervisord](http://supervisord.org/introduction.html)
+If you want to use the container in "machine mode", you can use the box available
+at http://bit.ly/vagrant-docker-precise, otherwise you'll need to create a custom
+command / script that starts the processes you need prior to firing up the SSH server.
+You could do that in many ways but a "simple bash script" example can be found at
+the [`boxes/nginx`](boxes/nginx) and a [supervisord](http://supervisord.org/introduction.html)
 example at the [`boxes/nginx-supervisord`](boxes/nginx-supervisord) folders of
 this repo.
-
-On a side note, if you really need your Docker containers to behave like machines
-with Vagrant and you can't get it to work that way like me, you might want to use
-[vagrant-lxc](https://github.com/fgrehm/vagrant-lxc) as an alternative.
-
-
-## Got feedback?
-
-Please keep in mind that this is a spike and I'm not sure if / how the project
-will evolve. I'm planning to write about why I built this at some point but
-in case you have any feedback feel free to open up an [issue here on GitHub](https://github.com/fgrehm/docker-provider/issues),
-shoot a tweet to [@fgrehm](https://twitter.com/fgrehm) or send a mail to the
-address available on my GitHub profile.
-
 
 ## Contributing
 
