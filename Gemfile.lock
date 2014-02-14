@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/fgrehm/vagrant-cachier.git
-  revision: c494876ac106ea6c3b86d5e58b1c461d7a9176f7
+  revision: 13e8d5e67458f84cc4403feb3cfc2fafda39c9d1
   branch: next
   specs:
     vagrant-cachier (0.6.0.dev)
