@@ -17,7 +17,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     node.vm.provider :docker do |docker|
       docker.image = 'fgrehm/vagrant-ubuntu:precise'
-      docker.cmd   = ["/usr/sbin/sshd", "-D", "-e"]
     end
   end
 
@@ -30,19 +29,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifests_path = "."
       puppet.manifest_file  = "site.pp"
     end
-  end
-
-  # Custom start script
-  config.vm.define 'nginx' do |node|
-    node.vm.box = 'nginx'
-    node.vm.box_url = 'http://bit.ly/vagrant-docker-nginx'
-    node.vm.network "forwarded_port", guest: 80, host: 8080
-  end
-
-  # Custom start script
-  config.vm.define 'nginx-supervisord' do |node|
-    node.vm.box = 'nginx-supervisord'
-    node.vm.box_url = 'http://bit.ly/vagrant-docker-nginx-supervisord'
-    node.vm.network "forwarded_port", guest: 80, host: 8081
   end
 end

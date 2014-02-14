@@ -104,16 +104,6 @@ The box format is basically just the required `metadata.json` file along with a
 for this provider.
 
 
-## Running multiple processes on the container
-
-If you want to use the container in "machine mode", you can use the box available
-at http://bit.ly/vagrant-docker-precise, otherwise you'll need to create a custom
-command / script that starts the processes you need prior to firing up the SSH server.
-You could do that in many ways but a "simple bash script" example can be found at
-the [`boxes/nginx`](boxes/nginx) and a [supervisord](http://supervisord.org/introduction.html)
-example at the [`boxes/nginx-supervisord`](boxes/nginx-supervisord) folders of
-this repo.
-
 ## Contributing
 
 1. Fork it
