@@ -6,6 +6,7 @@ require_relative 'action/forward_ports'
 require_relative 'action/stop'
 require_relative 'action/message'
 require_relative 'action/prepare_nfs_valid_ids'
+require_relative 'action/prepare_nfs_settings'
 require_relative 'action/is_running'
 require_relative 'action/start'
 
@@ -31,13 +32,19 @@ module VagrantPlugins
               b2.use PrepareNFSValidIds
               b2.use Builtin::SyncedFolderCleanup
               b2.use Builtin::SyncedFolders
+              b2.use PrepareNFSSettings
               b2.use ForwardPorts
               # This will actually create and start, but that's fine
               b2.use Create
               b2.use action_boot
+            else
+              b2.use PrepareNFSValidIds
+              b2.use Builtin::SyncedFolderCleanup
+              b2.use Builtin::SyncedFolders
+              b2.use PrepareNFSSettings
+              b2.use action_start
             end
           end
-          b.use action_start
         end
       end
 

@@ -136,13 +136,24 @@ describe VagrantPlugins::DockerProvider::Driver do
 
     before { subject.stub(execute: data) }
 
-    it 'inspect_container the container' do
+    it 'inspects the container' do
       subject.should_receive(:execute).with('docker', 'inspect', cid)
       subject.inspect_container(cid)
     end
 
     it 'parses the json output' do
       expect(subject.inspect_container(cid)).to eq('json' => 'value')
+    end
+  end
+
+  describe '#all_containers' do
+    let(:containers) { "container1\ncontainer2" }
+
+    before { subject.stub(execute: containers) }
+
+    it 'returns an array of all known containers' do
+      subject.should_receive(:execute).with('docker', 'ps', '-a', '-q', '-notrunc')
+      expect(subject.all_containers).to eq(['container1', 'container2'])
     end
   end
 end

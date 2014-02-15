@@ -8,7 +8,9 @@ module VagrantPlugins
         end
 
         def call(env)
-          env[:nfs_valid_ids] = []
+          machine = env[:machine]
+          env[:nfs_valid_ids] = machine.provider.driver.all_containers
+
           @app.call(env)
         end
       end

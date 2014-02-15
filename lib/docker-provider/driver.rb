@@ -81,6 +81,14 @@ module VagrantPlugins
         @data ||= JSON.parse(execute('docker', 'inspect', cid)).first
       end
 
+      def all_containers
+        execute('docker', 'ps', '-a', '-q', '-notrunc').to_s.split
+      end
+
+      def docker_bridge_ip
+        '172.17.42.1'
+      end
+
       private
 
       def execute(*cmd, &block)
