@@ -86,7 +86,13 @@ module VagrantPlugins
       end
 
       def docker_bridge_ip
-        '172.17.42.1'
+        output = execute('/sbin/ip', '-4', 'addr', 'show', 'scope', 'global', 'docker0')
+        if output =~ /^\s+inet ([0-9.]+)\/[0-9]+\s+/
+          return $1.to_s
+        else
+          # TODO: Raise an user friendly message
+          raise 'Unable to fetch docker bridge IP!'
+        end
       end
 
       private

@@ -156,4 +156,15 @@ describe VagrantPlugins::DockerProvider::Driver do
       expect(subject.all_containers).to eq(['container1', 'container2'])
     end
   end
+
+  describe '#docker_bridge_ip' do
+    let(:containers) { " inet 123.456.789.012/16 " }
+
+    before { subject.stub(execute: containers) }
+
+    it 'returns an array of all known containers' do
+      subject.should_receive(:execute).with('/sbin/ip', '-4', 'addr', 'show', 'scope', 'global', 'docker0')
+      expect(subject.docker_bridge_ip).to eq('123.456.789.012')
+    end
+  end
 end
