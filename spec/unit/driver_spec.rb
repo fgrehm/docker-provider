@@ -12,12 +12,13 @@ describe VagrantPlugins::DockerProvider::Driver do
 
   describe '#create' do
     let(:params) { {
-      image:    'jimi/hendrix:eletric-ladyland',
-      cmd:      ['play', 'voodoo-chile'],
-      ports:    '8080:80',
-      volumes:  '/host/path:guest/path',
-      name:     cid,
-      hostname: 'jimi-hendrix'
+      image:      'jimi/hendrix:eletric-ladyland',
+      cmd:        ['play', 'voodoo-chile'],
+      ports:      '8080:80',
+      volumes:    '/host/path:guest/path',
+      name:       cid,
+      hostname:   'jimi-hendrix',
+      privileged: true
     } }
 
     before { subject.create(params) }
@@ -36,6 +37,10 @@ describe VagrantPlugins::DockerProvider::Driver do
 
     it 'shares folders' do
       expect(cmd_executed).to match(/-v #{params[:volumes]} .+ #{Regexp.escape params[:image]}/)
+    end
+
+    it 'is able to run a privileged container' do
+      expect(cmd_executed).to match(/-privileged .+ #{Regexp.escape params[:image]}/)
     end
 
     it 'sets the hostname if specified' do

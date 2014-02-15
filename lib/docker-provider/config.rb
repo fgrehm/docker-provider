@@ -1,18 +1,20 @@
 module VagrantPlugins
   module DockerProvider
     class Config < Vagrant.plugin("2", :config)
-      attr_accessor :image, :cmd, :ports, :volumes
+      attr_accessor :image, :cmd, :ports, :volumes, :privileged
 
       def initialize
-        @image   = UNSET_VALUE
-        @cmd     = UNSET_VALUE
-        @ports   = UNSET_VALUE
-        @volumes = []
+        @image      = UNSET_VALUE
+        @cmd        = UNSET_VALUE
+        @ports      = UNSET_VALUE
+        @privileged = UNSET_VALUE
+        @volumes    = []
       end
 
       def finalize!
-        @ports   = [] if @ports == UNSET_VALUE
-        @cmd     = [] if @cmd == UNSET_VALUE
+        @ports      = [] if @ports == UNSET_VALUE
+        @cmd        = [] if @cmd == UNSET_VALUE
+        @privileged = false if @privileged == UNSET_VALUE
       end
 
       def validate(machine)
