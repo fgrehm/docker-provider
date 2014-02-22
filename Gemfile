@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'vagrant', github: 'mitchellh/vagrant', tag: 'v1.4.3'
+  gem 'vagrant',      github: 'mitchellh/vagrant', tag: 'v1.4.3'
+  gem 'vagrant-spec', github: 'mitchellh/vagrant-spec', ref: 'fbd067bbe5e2a789bb2b29c38d1224cdd9386836'
 end
 
 group :development do

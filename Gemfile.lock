@@ -37,6 +37,17 @@ GIT
       vocker (~> 0.4.1)
 
 GIT
+  remote: git://github.com/mitchellh/vagrant-spec.git
+  revision: fbd067bbe5e2a789bb2b29c38d1224cdd9386836
+  ref: fbd067bbe5e2a789bb2b29c38d1224cdd9386836
+  specs:
+    vagrant-spec (0.0.1)
+      childprocess (~> 0.3.7)
+      log4r (~> 1.1.9)
+      rspec (~> 2.14)
+      thor (~> 0.18.1)
+
+GIT
   remote: git://github.com/mitchellh/vagrant.git
   revision: 4f0eb9504cc786d5a57a43814427e8eb35407a4c
   tag: v1.4.3
@@ -124,4 +135,5 @@ DEPENDENCIES
   vagrant-lxc!
   vagrant-notify!
   vagrant-pristine!
+  vagrant-spec!
   ventriloquist!

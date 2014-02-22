@@ -4,7 +4,12 @@ require 'rspec/core/rake_task'
 namespace :spec do
   desc 'Run acceptance specs using Bats'
   task :acceptance do
-    sh 'bats spec/acceptance'
+    components = %w(
+      basic network/forwarded_port synced_folder synced_folder/nfs
+      provisioner/shell provisioner/puppet provisioner/chef-solo
+    ).map{|s| "provider/docker/#{s}" }
+
+    sh "bundle exec vagrant-spec test --components=#{components.join(' ')}"
   end
 
   require 'rspec/core/rake_task'
