@@ -54,6 +54,10 @@ module VagrantPlugins
         result =~ /^#{Regexp.escape cid}$/m
       end
 
+      def privileged?(cid)
+        inspect_container(cid)['HostConfig']['Privileged']
+      end
+
       def start(cid)
         unless running?(cid)
           execute('docker', 'start', cid)

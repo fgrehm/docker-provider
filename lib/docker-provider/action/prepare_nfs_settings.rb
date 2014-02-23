@@ -1,3 +1,5 @@
+require_relative '../errors'
+
 module VagrantPlugins
   module DockerProvider
     module Action
@@ -14,6 +16,10 @@ module VagrantPlugins
 
           @app.call(env)
 
+          if using_nfs? && !privileged_container?
+            raise Errors::NfsWithoutPrivilegedError
+          end
+
           if using_nfs?
             @logger.info("Using NFS, preparing NFS settings by reading host IP and machine IP")
             add_ips_to_env!(env)
@@ -25,6 +31,10 @@ module VagrantPlugins
         # populate these fields in the environment.
         def using_nfs?
           @machine.config.vm.synced_folders.any? { |_, opts| opts[:type] == :nfs }
+        end
+
+        def privileged_container?
+          @machine.provider.driver.privileged?(@machine.id)
         end
 
         # Extracts the proper host and guest IPs for NFS mounts and stores them

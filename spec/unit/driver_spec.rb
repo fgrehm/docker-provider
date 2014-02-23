@@ -91,6 +91,18 @@ describe VagrantPlugins::DockerProvider::Driver do
     end
   end
 
+  describe '#privileged?' do
+    it 'identifies privileged containers' do
+      subject.stub(inspect_container: {'HostConfig' => {"Privileged" => true}})
+      expect(subject).to be_privileged(cid)
+    end
+
+    it 'identifies unprivileged containers' do
+      subject.stub(inspect_container: {'HostConfig' => {"Privileged" => false}})
+      expect(subject).to_not be_privileged(cid)
+    end
+  end
+
   describe '#start' do
     context 'when container is running' do
       before { subject.stub(running?: true) }

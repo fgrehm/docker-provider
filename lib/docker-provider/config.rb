@@ -26,6 +26,12 @@ module VagrantPlugins
 
         { "docker-provider" => errors }
       end
+
+      private
+
+      def using_nfs?(machine)
+        machine.config.vm.synced_folders.any? { |_, opts| opts[:type] == :nfs }
+      end
     end
   end
 end

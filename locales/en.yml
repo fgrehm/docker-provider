@@ -17,5 +17,16 @@ en:
 
     errors:
       config:
-        image_not_set: 'The base Docker image has not been set!'
-        image_not_set: 'The Docker command has not been set!'
+        image_not_set: |-
+          The base Docker image has not been set!
+
+        cmd_not_set: |-
+          The Docker command has not been set!
+
+  vagrant:
+    errors:
+      docker_provider_nfs_without_privileged: |-
+        You've configured a NFS synced folder but didn't enable privileged
+        mode for the container. Please set the `privileged` option to true
+        on the provider block from your Vagrantfile, recreate the container
+        and try again.
