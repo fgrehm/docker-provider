@@ -11,7 +11,7 @@ module VagrantPlugins
             raise Vagrant::Errors::VMNotCreatedError
           end
 
-          if env[:machine].state.id == :created
+          if env[:machine].state.id == :stopped
             raise Vagrant::Errors::VMNotRunningError
           end
 
