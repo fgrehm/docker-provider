@@ -9,6 +9,12 @@ shared_examples "provider/provisioner/puppet" do |provider, options|
 
   before do
     environment.skeleton("provisioner_puppet")
+
+    vagrantfile = environment.workdir.join('Vagrantfile')
+    # TODO: Can we just shell out to something?
+    new_vagrantfile = "Vagrant.require_plugin('docker-provider')\n#{vagrantfile.read}"
+    vagrantfile.open('w') { |f| f.puts(new_vagrantfile) }
+
     assert_execute("vagrant", "box", "add", "box", box)
     assert_execute("vagrant", "up", "--provider=#{provider}")
   end

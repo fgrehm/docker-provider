@@ -8,6 +8,13 @@ shared_examples "provider/synced_folder/nfs" do |provider, options|
 
   before do
     environment.skeleton("synced_folder_nfs")
+
+    vagrantfile = environment.workdir.join('Vagrantfile')
+    new_vagrantfile = "Vagrant.require_plugin('docker-provider')\n#{vagrantfile.read}"
+    new_vagrantfile.gsub!(/(config\.vm\.box = "box")/, "\\1\nconfig.vm.provider :docker do |docker|\ndocker.privileged = true\nend\n")
+    new_vagrantfile.gsub!(/(, type: "nfs")/, '\1, mount_options: ["rw", "vers=3", "tcp", "nolock"]')
+    vagrantfile.open('w') { |f| f.puts(new_vagrantfile) }
+
     assert_execute("vagrant", "box", "add", "box", options[:box])
     assert_execute("vagrant", "up", "--provider=#{provider}")
   end

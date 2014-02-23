@@ -8,6 +8,12 @@ shared_examples "provider/network/forwarded_port" do |provider, options|
 
   before do
     environment.skeleton("network_forwarded_port")
+
+    vagrantfile = environment.workdir.join('Vagrantfile')
+    # TODO: Can we just shell out to something?
+    new_vagrantfile = "Vagrant.require_plugin('docker-provider')\n#{vagrantfile.read}"
+    vagrantfile.open('w') { |f| f.puts(new_vagrantfile) }
+
     assert_execute("vagrant", "box", "add", "box", options[:box])
     assert_execute("vagrant", "up", "--provider=#{provider}")
   end

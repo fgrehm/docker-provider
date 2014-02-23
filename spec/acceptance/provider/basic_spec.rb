@@ -11,6 +11,10 @@ shared_examples "provider/basic" do |provider, options|
   before do
     assert_execute("vagrant", "box", "add", "box", options[:box])
     assert_execute("vagrant", "init", "box")
+    vagrantfile = environment.workdir.join('Vagrantfile')
+    # TODO: Can we just shell out to something?
+    new_vagrantfile = "Vagrant.require_plugin('docker-provider')\n#{vagrantfile.read}"
+    vagrantfile.open('w') { |f| f.puts(new_vagrantfile) }
   end
 
   after do
