@@ -1,0 +1,7 @@
+Vagrant.configure("2") do |config|
+  config.vm.provider :docker do |docker|
+    docker.image = "IMAGE"
+    docker.privileged = true
+    docker.volumes << '/var/lib/docker'
+  end
+end
