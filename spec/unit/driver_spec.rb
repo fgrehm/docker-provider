@@ -131,6 +131,26 @@ describe VagrantPlugins::DockerProvider::Driver do
     end
   end
 
+  describe '#rm' do
+    context 'when container has been created' do
+      before { subject.stub(created?: true) }
+
+      it 'removes the container' do
+        subject.should_receive(:execute).with('docker', 'rm', '-v', cid)
+        subject.rm(cid)
+      end
+    end
+
+    context 'when container has not been created' do
+      before { subject.stub(created?: false) }
+
+      it 'does not attempt to remove the container' do
+        subject.should_not_receive(:execute).with('docker', 'rm', '-v', cid)
+        subject.rm(cid)
+      end
+    end
+  end
+
   describe '#inspect_container' do
     let(:data) { '[{"json": "value"}]' }
 

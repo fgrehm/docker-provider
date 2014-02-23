@@ -72,12 +72,13 @@ module VagrantPlugins
 
       def rm(cid)
         if created?(cid)
-          execute('docker', 'rm', cid)
+          execute('docker', 'rm', '-v', cid)
         end
       end
 
       def inspect_container(cid)
-        # DISCUSS: Is there a chance that this will change?
+        # DISCUSS: Is there a chance that this json will change after the container
+        #          has been brought up?
         @data ||= JSON.parse(execute('docker', 'inspect', cid)).first
       end
 
