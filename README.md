@@ -26,7 +26,7 @@ This is experimental, expect things to break.
 * Provision Docker containers with any built-in Vagrant provisioner
 
 You can see the plugin in action by watching the following "teasers" I published
-along the way:
+while I was working on its early days:
 
 * http://asciinema.org/a/6162
 * http://asciinema.org/a/6177
@@ -40,7 +40,9 @@ and follow the instructions from there.
 
 The plugin is not very user friendly at the moment, so please download the base
 Docker image manually with `docker pull fgrehm/vagrant-ubuntu:precise` in order
-to have some feedback about the download process.
+to have some feedback about the download process. This image approximates a standard
+Vagrant box (`vagrant` user, with SSH key, etc.) and will be used by the box
+definition that you'll add below.
 
 Assuming you have Vagrant 1.4+ and Docker 0.7.0+ installed just sing that same
 old song:
@@ -76,23 +78,6 @@ end
 ```
 
 
-## Limitations
-
-There's probably a whole lot of limitations right now but during these early days
-of the plugin I can tell you for sure that some things are probably not going to
-work as you might expect. For instance forwarded ports, synced folders and containers'
-hostnames will not be reconfigured on `vagrant reload`s if they have changed and
-the plugin **_will not give you any kind of warning or message_**. For instance,
-if you change your Puppet manifests / Chef cookbooks paths (which are shared /
-synced folders under the hood), **_you'll need to start from scratch_**. Oh,
-and forwarded ports automatic collision handling is **_not supported as well_**.
-
-The plugin also requires Docker's executable to be available on current user's `PATH`
-and that the current user has been added to the `docker` group since we are not
-using `sudo` when interacting with Docker's CLI. For more information on setting
-this up please check [this page](http://docs.docker.io/en/latest/use/basics/#why-sudo).
-
-
 ## Box format
 
 Every provider in Vagrant must introduce a custom box format. This provider introduces
@@ -104,6 +89,25 @@ The box format is basically just the required `metadata.json` file along with a
 for this provider.
 
 
+## Limitations
+
+There's probably a lot of limitations right now but during these early days
+of the plugin I can tell you for sure that some things are probably not going to
+work as you might expect. For instance forwarded ports, synced folders and containers'
+hostnames will not be reconfigured on `vagrant reload`s if they have changed and
+the plugin **_will not give you any kind of warning or message_**. For instance,
+if you change your Puppet manifests / Chef cookbooks paths (which are shared /
+synced folders under the hood), **_you'll need to start from scratch_** (unless you
+make them NFS / rsync shared folders). This is due to a limitation in Docker itself as
+we can't change those parameters after the container has been created. Forwarded
+ports automatic collision handling is **_not supported as well_**.
+
+The plugin also requires Docker's executable to be available on current user's `PATH`
+and that the current user has been added to the `docker` group since we are not
+using `sudo` when interacting with Docker's CLI. For more information on setting
+this up please check [this page](http://docs.docker.io/en/latest/use/basics/#why-sudo).
+
+
 ## Contributing
 
 1. Fork it
@@ -111,5 +115,3 @@ for this provider.
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fgrehm/docker-provider/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
