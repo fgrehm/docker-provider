@@ -1,27 +1,20 @@
 GIT
   remote: git://github.com/fgrehm/vagrant-cachier.git
-  revision: 13e8d5e67458f84cc4403feb3cfc2fafda39c9d1
-  branch: next
+  revision: 2faa6615466f8d518893f5ba51b493b877d2efde
   specs:
-    vagrant-cachier (0.6.0.dev)
-
-GIT
-  remote: git://github.com/fgrehm/vagrant-global-status.git
-  revision: 8ae82e2c57b085a030137a40e9b3d232f42e5117
-  specs:
-    vagrant-global-status (0.1.5.dev)
+    vagrant-cachier (0.6.1.dev)
 
 GIT
   remote: git://github.com/fgrehm/vagrant-lxc.git
-  revision: 1083f100adc4cf1bd20e7eb794ecfda94ef8b365
+  revision: 4a84d95ff26bf2d887b127765a9ae404899734f9
   specs:
-    vagrant-lxc (0.7.1.dev)
+    vagrant-lxc (0.8.1.dev)
 
 GIT
   remote: git://github.com/fgrehm/vagrant-notify.git
-  revision: 6b40f23a17f48b9df6c3462427f3ac88d9c2304c
+  revision: 56cc81882a6ca0c74ad662c81fca8105a307782c
   specs:
-    vagrant-notify (0.3.0)
+    vagrant-notify (0.4.1.dev)
 
 GIT
   remote: git://github.com/fgrehm/vagrant-pristine.git
@@ -70,6 +63,9 @@ GEM
   specs:
     celluloid (0.15.2)
       timers (~> 1.1.0)
+    celluloid-io (0.15.0)
+      celluloid (>= 0.15.0)
+      nio4r (>= 0.5.0)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.0)
@@ -77,18 +73,19 @@ GEM
     erubis (2.7.0)
     ffi (1.9.3)
     formatador (0.2.4)
-    guard (2.3.0)
+    guard (2.5.1)
       formatador (>= 0.2.4)
-      listen (~> 2.1)
+      listen (~> 2.6)
       lumberjack (~> 1.0)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
-    guard-rspec (4.2.5)
+    guard-rspec (4.2.7)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
     i18n (0.6.9)
-    listen (2.4.0)
+    listen (2.6.1)
       celluloid (>= 0.15.2)
+      celluloid-io (>= 0.15.0)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     log4r (1.1.10)
@@ -97,6 +94,7 @@ GEM
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.7.0)
+    nio4r (1.0.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -112,7 +110,7 @@ GEM
     rspec-core (2.14.7)
     rspec-expectations (2.14.5)
       diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.14.5)
+    rspec-mocks (2.14.6)
     slop (3.4.7)
     thor (0.18.1)
     timers (1.1.0)
@@ -131,7 +129,6 @@ DEPENDENCIES
   rspec
   vagrant!
   vagrant-cachier!
-  vagrant-global-status!
   vagrant-lxc!
   vagrant-notify!
   vagrant-pristine!
