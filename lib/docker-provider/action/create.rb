@@ -14,6 +14,8 @@ module VagrantPlugins
           @machine_config  = @machine.config
           @driver          = @machine.provider.driver
 
+          guard_cmd_configured!
+
           cid = ''
           @@mutex.synchronize do
             cid = @driver.create(create_params)
@@ -44,6 +46,12 @@ module VagrantPlugins
             # TODO: Support for the protocol argument
             "#{fp[:host]}:#{fp[:guest]}"
           end.compact
+        end
+
+        def guard_cmd_configured!
+          if ! @provider_config.image
+            raise Errors::ImageNotConfiguredError, name: @machine.name
+          end
         end
       end
     end

@@ -17,9 +17,6 @@ en:
 
     errors:
       config:
-        image_not_set: |-
-          The base Docker image has not been set!
-
         cmd_not_set: |-
           The Docker command has not been set!
 
@@ -30,3 +27,6 @@ en:
         mode for the container. Please set the `privileged` option to true
         on the provider block from your Vagrantfile, recreate the container
         and try again.
+
+      docker_provider_image_not_configured: |-
+        The base Docker image has not been set for the '%{name}' VM!

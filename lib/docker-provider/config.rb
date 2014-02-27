@@ -4,7 +4,7 @@ module VagrantPlugins
       attr_accessor :image, :cmd, :ports, :volumes, :privileged
 
       def initialize
-        @image      = UNSET_VALUE
+        @image      = nil
         @cmd        = UNSET_VALUE
         @ports      = UNSET_VALUE
         @privileged = UNSET_VALUE
@@ -20,7 +20,6 @@ module VagrantPlugins
       def validate(machine)
         errors = _detected_errors
 
-        errors << I18n.t("docker_provider.errors.config.image_not_set") if @image == UNSET_VALUE
         # TODO: Detect if base image has a CMD / ENTRYPOINT set before erroring out
         errors << I18n.t("docker_provider.errors.config.cmd_not_set")   if @cmd == UNSET_VALUE
 
