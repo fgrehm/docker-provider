@@ -73,14 +73,6 @@ STR
       echo '{ "provider": "docker" }' > $HOME/.vagrant.d/boxes/dummy/docker/metadata.json
     fi
 
-    # TODO: Get rid of this once Ventriloquist gets support for it:
-    #         https://github.com/fgrehm/ventriloquist/issues/32
-    if ! [ -f /usr/local/bin/bats ]; then
-      git clone https://github.com/sstephenson/bats.git /tmp/bats
-      cd /tmp/bats && sudo ./install.sh /usr/local
-      rm -rf /tmp/bats
-    fi
-
     if ! $(which bsdtar > /dev/null 2>/dev/null); then
       sudo apt-get install bsdtar -y
     fi
