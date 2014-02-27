@@ -11,16 +11,22 @@ Vagrant.require_plugin 'vagrant-cachier'
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.cache.scope = :box
+  config.cache.scope = :machine
 
-  # This just fires up a container with a SSH server
+  # This fires up a container with a SSH server
   config.vm.define 'dummy' do |node|
     node.vm.box = 'dummy'
     node.vm.box_url = 'http://bit.ly/vagrant-docker-dummy'
 
     node.vm.provider :docker do |docker|
       docker.image = 'fgrehm/vagrant-ubuntu:precise'
+      docker.privileged = true
+      docker.volumes << '/var/lib/docker'
     end
+
+    node.cache.synced_folder_opts = {
+      type: :nfs, mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+    }
   end
 
   # This is a container that gets provisioned with Puppet
