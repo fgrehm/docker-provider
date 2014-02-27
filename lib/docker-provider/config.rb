@@ -6,13 +6,12 @@ module VagrantPlugins
       def initialize
         @image      = nil
         @cmd        = UNSET_VALUE
-        @ports      = UNSET_VALUE
+        @ports      = []
         @privileged = UNSET_VALUE
         @volumes    = []
       end
 
       def finalize!
-        @ports      = [] if @ports == UNSET_VALUE
         @cmd        = [] if @cmd == UNSET_VALUE
         @privileged = false if @privileged == UNSET_VALUE
       end
