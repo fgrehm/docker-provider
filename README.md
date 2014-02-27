@@ -34,25 +34,47 @@ while I was working on its early days:
 
 ## Getting started
 
-If you are on a Mac / Windows machine, please fire up a x64 VM with Docker +
-Vagrant installed or use [this Vagrantfile](https://gist.github.com/fgrehm/fc48fb51ec7df64439e4)
-and follow the instructions from there.
+If you are on a Mac / Windows machine, please fire up a x64 Linux VM with Docker +
+Vagrant 1.4+ installed or use [this Vagrantfile](https://gist.github.com/fgrehm/fc48fb51ec7df64439e4)
+and follow the instructions from within the VM.
 
-The plugin is not very user friendly at the moment, so please download the base
-Docker image manually with `docker pull fgrehm/vagrant-ubuntu:precise` in order
-to have some feedback about the download process. This image approximates a standard
-Vagrant box (`vagrant` user, with SSH key, etc.) and will be used by the box
-definition that you'll add below.
+### Initial setup
+
+_If you are trying things out from a Vagrant VM using the `Vagrantfile` gisted
+above, you can skip to the next section_
+
+The plugin requires Docker's executable to be available on current user's `PATH`
+and that the current user has been added to the `docker` group since we are not
+using `sudo` when interacting with Docker's CLI. For more information on setting
+this up please check [this page](http://docs.docker.io/en/latest/installation/ubuntulinux/#giving-non-root-access).
+
+### Add base box
+
+On its current state, the plugin does not provide any kind of feedback about the
+process of downloading Docker images, so before you add a `docker-provider`
+[base box](http://docs.vagrantup.com/v2/boxes.html) it is recommended that you
+`docker pull` the associated base box images prior to spinning up `docker-provider`
+containers (otherwise you'll be staring at a blinking cursor without any progress
+information).
 
 Assuming you have Vagrant 1.4+ and Docker 0.7.0+ installed just sing that same
 old song:
 
-```
+```sh
 vagrant plugin install docker-provider
-vagrant box add precise http://bit.ly/vagrant-docker-precise
-vagrant init precise
+docker pull fgrehm/vagrant-ubuntu:precise
+vagrant box add precise64 http://bit.ly/vagrant-docker-precise
+vagrant init precise64
 vagrant up --provider=docker
 ```
+
+Under the hood, that base box will [configure](#configuration) `docker-provider`
+to use the [`fgrehm/vagrant-ubuntu:precise`](https://index.docker.io/u/fgrehm/vagrant-ubuntu/)
+image that approximates a standard Vagrant box (`vagrant` user, default SSH key,
+etc.) and you should be good to go.
+
+
+## Configuration
 
 
 ## Using custom images
@@ -71,11 +93,15 @@ or [vagrant-aws](https://github.com/mitchellh/vagrant-aws#quick-start):
 Vagrant.configure("2") do |config|
   config.vm.box = "dummy"
   config.vm.provider :docker do |docker|
-    docker.image = "your/image:tag"
-    docker.cmd   = ["/path/to/your", "command"]
+    docker.image      = "your/image:tag"
+    docker.cmd        = ["/path/to/your", "command"]
+    docker.privileged = true # Defaults to false
   end
 end
 ```
+
+
+## Available boxes
 
 
 ## Box format
@@ -101,11 +127,6 @@ synced folders under the hood), **_you'll need to start from scratch_** (unless 
 make them NFS / rsync shared folders). This is due to a limitation in Docker itself as
 we can't change those parameters after the container has been created. Forwarded
 ports automatic collision handling is **_not supported as well_**.
-
-The plugin also requires Docker's executable to be available on current user's `PATH`
-and that the current user has been added to the `docker` group since we are not
-using `sudo` when interacting with Docker's CLI. For more information on setting
-this up please check [this page](http://docs.docker.io/en/latest/use/basics/#why-sudo).
 
 
 ## Contributing
