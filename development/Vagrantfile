@@ -53,7 +53,7 @@ STR
 
   # Configure Ruby so that we can test the plugin from within the VM
   config.vm.provision :ventriloquist do |env|
-    env.platforms << 'ruby:1.9.3'
+    env.platforms << 'ruby:2.0.0'
   end
 
   config.vm.provision :shell, privileged: false, inline: %[
