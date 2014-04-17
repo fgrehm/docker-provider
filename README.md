@@ -5,6 +5,8 @@
 A [Docker](http://www.docker.io/) provider for [Vagrant](http://www.vagrantup.com/)
 1.4+.
 
+**NOTICE: This plugin is no longer being maintained as its functionality [has been merged back to Vagrant core](https://github.com/mitchellh/vagrant/pull/3347) and will be available with Vagrant 1.6+.**
+
 
 ## Warning
 
